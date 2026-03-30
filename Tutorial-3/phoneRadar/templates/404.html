@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found - Phone Radar{% endblock %}
+
+{% block content %}
+    <div style="text-align: center; padding: 3rem 2rem;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">😕</div>
+        <h1 style="color: #333; margin-bottom: 0.5rem;">Page Not Found</h1>
+        <p style="color: #666; font-size: 1.1rem; margin-bottom: 2rem;">
+            Sorry, the page you're looking for doesn't exist or has been moved.
+        </p>
+
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'home' %}" class="btn btn-primary btn-lg">Back to Home</a>
+            <a href="{% url 'phone_list' %}" class="btn btn-secondary" style="padding: 0.75rem 1.5rem; color: #333; background-color: #ecf0f1;">Browse Phones</a>
+        </div>
+
+        <div style="margin-top: 3rem; padding-top: 3rem; border-top: 1px solid #eee;">
+            <p style="color: #999; font-size: 0.9rem;">Error 404 - Page Not Found</p>
+        </div>
+    </div>
+{% endblock %}
+

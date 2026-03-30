@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Review - Phone Radar{% endblock %}
+
+{% block content %}
+    <div style="max-width: 700px; margin: 0 auto;">
+        <h1 style="color: #333; margin-bottom: 2rem; text-align: center;">✏️ Edit Review</h1>
+
+        <form method="POST" style="background: white; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            {% csrf_token %}
+
+            <!-- Review Title -->
+            <div class="form-group">
+                <label for="title">📝 Review Title:</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    maxlength="300"
+                    required
+                    value="{{ review.title }}"
+                >
+            </div>
+
+            <!-- Rating -->
+            <div class="form-group">
+                <label for="rating">⭐ Your Rating:</label>
+                <div style="display: flex; gap: 1rem; align-items: center; margin-top: 1rem;">
+                    <div style="display: flex; gap: 0.5rem; font-size: 2rem;">
+                        <input
+                            type="radio"
+                            id="rating_1"
+                            name="rating"
+                            value="1"
+                            style="width: auto; margin: 0;"
+                            {% if review.rating == 1 %}checked{% endif %}
+                        >
+                        <label for="rating_1" style="margin: 0; cursor: pointer; font-size: 1rem;">★</label>
+
+                        <input
+                            type="radio"
+                            id="rating_2"
+                            name="rating"
+                            value="2"
+                            style="width: auto; margin: 0;"
+                            {% if review.rating == 2 %}checked{% endif %}
+                        >
+                        <label for="rating_2" style="margin: 0; cursor: pointer; font-size: 1rem;">★★</label>
+
+                        <input
+                            type="radio"
+                            id="rating_3"
+                            name="rating"
+                            value="3"
+                            style="width: auto; margin: 0;"
+                            {% if review.rating == 3 %}checked{% endif %}
+                        >
+                        <label for="rating_3" style="margin: 0; cursor: pointer; font-size: 1rem;">★★★</label>
+
+                        <input
+                            type="radio"
+                            id="rating_4"
+                            name="rating"
+                            value="4"
+                            style="width: auto; margin: 0;"
+                            {% if review.rating == 4 %}checked{% endif %}
+                        >
+                        <label for="rating_4" style="margin: 0; cursor: pointer; font-size: 1rem;">★★★★</label>
+
+                        <input
+                            type="radio"
+                            id="rating_5"
+                            name="rating"
+                            value="5"
+                            style="width: auto; margin: 0;"
+                            {% if review.rating == 5 %}checked{% endif %}
+                        >
+                        <label for="rating_5" style="margin: 0; cursor: pointer; font-size: 1rem;">★★★★★</label>
+                    </div>
+                </div>
+                <div id="rating_display" style="margin-top: 0.5rem; color: #667eea; font-weight: bold;"></div>
+            </div>
+
+            <!-- Review Content -->
+            <div class="form-group">
+                <label for="content">💬 Your Review:</label>
+                <textarea
+                    id="content"
+                    name="content"
+                    required
+                >{{ review.content }}</textarea>
+                <small style="color: #999; display: block; margin-top: 0.5rem;">
+                    <span id="char_count">{{ review.content|length }}</span> / 5000 characters
+                </small>
+            </div>
+
+            <!-- Form Actions -->
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn btn-primary btn-lg" style="flex: 1;">Save Changes</button>
+                <a href="{% url 'phone_detail' review.phone_models.first.id %}" class="btn" style="background-color: #95a5a6; color: white; padding: 0.75rem 1.5rem; flex: 1; text-align: center; text-decoration: none;">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Update rating display
+        document.querySelectorAll('input[name="rating"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const ratingMap = {
+                    '1': '⭐ Poor',
+                    '2': '⭐⭐ Fair',
+                    '3': '⭐⭐⭐ Good',
+                    '4': '⭐⭐⭐⭐ Very Good',
+                    '5': '⭐⭐⭐⭐⭐ Excellent'
+                };
+                document.getElementById('rating_display').textContent = ratingMap[this.value] || '';
+            });
+        });
+
+        // Update character count
+        document.getElementById('content').addEventListener('input', function() {
+            document.getElementById('char_count').textContent = this.value.length;
+        });
+
+        // Initialize rating display
+        const selectedRating = document.querySelector('input[name="rating"]:checked');
+        if (selectedRating) {
+            selectedRating.dispatchEvent(new Event('change'));
+        }
+    </script>
+{% endblock %}
+

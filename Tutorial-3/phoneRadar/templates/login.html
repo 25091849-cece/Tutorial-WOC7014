@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Phone Radar{% endblock %}
+
+{% block content %}
+    <div style="max-width: 500px; margin: 3rem auto;">
+        <div style="background: white; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <h1 style="color: #333; margin-bottom: 0.5rem; text-align: center;">Welcome Back</h1>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Login to your Phone Radar account</p>
+
+            {% if form.non_field_errors %}
+                <div class="error-message" style="background-color: #f8d7da; color: #721c24; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
+                    {{ form.non_field_errors.0 }}
+                </div>
+            {% endif %}
+
+            <form method="POST" novalidate>
+                {% csrf_token %}
+
+                <!-- Username/Email -->
+                <div class="form-group">
+                    <label for="username">👤 Username or Email:</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username or email"
+                        required
+                        autofocus
+                        value="{{ form.username.value|default:'' }}"
+                    >
+                    {% if form.username.errors %}
+                        <div class="error-message">{{ form.username.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">🔐 Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+                    {% if form.password.errors %}
+                        <div class="error-message">{{ form.password.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Remember Me -->
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="remember"
+                            name="remember"
+                        >
+                        <label for="remember" style="margin: 0;">Remember me on this device</label>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-bottom: 1rem;">
+                    Login
+                </button>
+
+                <!-- Forgot Password & Register Links -->
+                <div style="display: flex; justify-content: space-between; color: #666; font-size: 0.9rem;">
+                    <a href="#" style="color: #667eea; text-decoration: none;">Forgot password?</a>
+                    <span>|</span>
+                    <a href="{% url 'register' %}" style="color: #667eea; text-decoration: none;">Create account</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Info Box -->
+        <div style="background: #e8f4f8; padding: 1.5rem; border-radius: 0.5rem; margin-top: 2rem; border-left: 4px solid #667eea;">
+            <h3 style="color: #333; margin-bottom: 0.5rem;">ℹ️ No Account Yet?</h3>
+            <p style="color: #555; margin: 0 0 1rem 0;">
+                Join our community to write reviews, share your opinions, and help others find the perfect phone.
+            </p>
+            <a href="{% url 'register' %}" class="btn btn-primary" style="display: inline-block;">Create Free Account</a>
+        </div>
+    </div>
+{% endblock %}
+

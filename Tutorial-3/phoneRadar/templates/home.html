@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Phone Radar{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>📱 Welcome to Phone Radar</h1>
+        <p>Your Ultimate Source for Authentic Phone Reviews</p>
+        <p style="font-size: 1rem; margin: 1rem 0;">Discover honest reviews from real users. Find the perfect phone for your needs.</p>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Get Started</a>
+        {% else %}
+            <a href="{% url 'add_review' %}" class="btn btn-primary btn-lg">Write a Review</a>
+        {% endif %}
+    </div>
+
+    <!-- Latest Reviews Section -->
+    <h2 style="margin: 2rem 0 1.5rem 0; color: #333;">Latest Reviews</h2>
+
+    {% if latest_reviews %}
+        <div class="card-grid">
+            {% for review in latest_reviews %}
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            {% for phone_model in review.phone_models.all %}
+                                {{ phone_model.brand.name }} {{ phone_model.model_name }}
+                                {% if not forloop.last %}<br>{% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 style="margin-bottom: 0.5rem; color: #333;">{{ review.title }}</h3>
+                        <div class="rating">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                            {% endfor %}
+                            <span style="color: #333; margin-left: 0.5rem;">{{ review.rating }}/5</span>
+                        </div>
+                        <p class="card-text">
+                            <strong>By:</strong> {{ review.author.username }}<br>
+                            <strong>Date:</strong> {{ review.date_published|date:"M d, Y" }}
+                        </p>
+                        <p class="card-text">{{ review.content|truncatewords:30 }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'review_detail' review.id %}" class="btn btn-primary">Read Full Review</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div style="background: white; padding: 2rem; border-radius: 0.5rem; text-align: center; color: #999;">
+            <p>No reviews yet. Be the first to write one!</p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'add_review' %}" class="btn btn-primary" style="margin-top: 1rem;">Write First Review</a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+{% endblock %}
+
