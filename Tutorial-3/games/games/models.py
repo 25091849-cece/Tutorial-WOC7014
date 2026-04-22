@@ -1,10 +1,12 @@
 from django.db import models
-from django.template.defaultfilters import slugify
 
 # Create your models here.
 
 class Tags(models.Model):
     label = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.label
 
 class Game(models.Model):
     title = models.CharField(max_length=100)
@@ -12,6 +14,9 @@ class Game(models.Model):
     platform = models.CharField(max_length=50, default='null')
     label_tag = models.ManyToManyField(Tags, blank=True)
     slug = models.SlugField(max_length=150, default='null')
+
+    def __str__(self):
+        return self.title
 
 class Review(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)

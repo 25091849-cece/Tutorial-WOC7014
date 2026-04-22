@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Game List{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-title {
+        color: #1e3a8a;
+        margin-bottom: 16px;
+    }
+
+    .page-subtitle {
+        color: #64748b;
+        margin-bottom: 18px;
+    }
+
+    .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+    }
+
+    .game-card {
+        background: #ffffff;
+        border: 1px solid #dbe3ef;
+        border-top: 4px solid #5f73e8;
+        border-radius: 12px;
+        padding: 18px;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+    }
+
+    .game-card h3 {
+        color: #5f73e8;
+        margin-bottom: 10px;
+        font-size: 1.25rem;
+    }
+
+    .meta {
+        color: #4b5563;
+        margin-bottom: 8px;
+    }
+
+    .summary {
+        background: #f8fafc;
+        border-left: 4px solid #5f73e8;
+        padding: 10px 12px;
+        border-radius: 6px;
+        margin: 12px 0;
+        color: #334155;
+    }
+
+    .tag-pill {
+        display: inline-block;
+        background: #e0e7ff;
+        color: #3730a3;
+        border-radius: 999px;
+        padding: 4px 8px;
+        margin-right: 6px;
+        margin-bottom: 6px;
+        font-size: 0.85rem;
+    }
+
+    .muted {
+        color: #6b7280;
+    }
+
+    .empty-state {
+        background: #ffffff;
+        border: 1px dashed #cbd5e1;
+        border-radius: 12px;
+        padding: 22px;
+        color: #64748b;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Game List</h2>
+<p class="page-subtitle">Browse the sample collection with tags and platform details.</p>
+
+<div class="game-grid">
+    {% for game in games %}
+        <article class="game-card">
+            <h3>{{ game.title }}</h3>
+            <p class="meta"><strong>Developer:</strong> {{ game.developer }}</p>
+            <p class="meta"><strong>Platform:</strong> {{ game.platform }}</p>
+            <div class="summary">{{ game.developer }} on {{ game.platform }} with {{ game.label_tag.count }} tag{{ game.label_tag.count|pluralize }}</div>
+            <div>
+                <strong>Tags:</strong>
+                {% for tag in game.label_tag.all %}
+                    <span class="tag-pill">{{ tag.label }}</span>
+                {% empty %}
+                    <span class="muted">No tags</span>
+                {% endfor %}
+            </div>
+        </article>
+    {% empty %}
+        <div class="empty-state">No games available. Add your first game or seed the demo data.</div>
+    {% endfor %}
+</div>
+{% endblock %}
+

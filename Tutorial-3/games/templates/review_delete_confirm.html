@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Review{% endblock %}
+
+{% block extra_css %}
+<style>
+    .confirm-card {
+        background: #ffffff;
+        border: 1px solid #dbe3ef;
+        border-radius: 10px;
+        padding: 18px;
+        max-width: 700px;
+    }
+
+    .confirm-card h2 {
+        color: #b91c1c;
+        margin-bottom: 12px;
+    }
+
+    .confirm-card p {
+        margin-bottom: 10px;
+        color: #334155;
+    }
+
+    .actions {
+        margin-top: 14px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .btn-danger {
+        background: #dc2626;
+        color: #ffffff;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 14px;
+        cursor: pointer;
+    }
+
+    .btn-link {
+        color: #1e3a8a;
+        text-decoration: none;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="confirm-card">
+    <h2>Delete Review</h2>
+    <p>Are you sure you want to delete this review for <strong>{{ object.game.title }}</strong>?</p>
+    <p>{{ object.review }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="actions">
+            <button type="submit" class="btn-danger">Yes, Delete</button>
+            <a href="{% url 'review_list' %}" class="btn-link">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

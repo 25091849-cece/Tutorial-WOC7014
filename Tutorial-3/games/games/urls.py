@@ -17,6 +17,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from games.view import (
+    GameCreateView,
+    GameListView,
+    GameReviewListView,
+    ReviewCreateView,
+    ReviewDeleteView,
+    TagCreateView,
+    TagListView,
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', GameReviewListView.as_view(), name='home'),
+    path('games/', GameListView.as_view(), name='game_list'),
+    path('games/add/', GameCreateView.as_view(), name='game_add'),
+    path('reviews/', GameReviewListView.as_view(), name='review_list'),
+    path('reviews/add/', ReviewCreateView.as_view(), name='review_add'),
+    path('reviews/<int:pk>/delete/', ReviewDeleteView.as_view(), name='review_delete'),
+    path('tags/', TagListView.as_view(), name='tag_list'),
+    path('tags/add/', TagCreateView.as_view(), name='tag_add'),
 ]

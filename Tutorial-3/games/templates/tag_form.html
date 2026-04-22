@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Tag{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-card {
+        background: #ffffff;
+        border: 1px solid #dbe3ef;
+        border-radius: 10px;
+        padding: 18px;
+        max-width: 700px;
+    }
+
+    .form-card h2 {
+        color: #1e3a8a;
+        margin-bottom: 14px;
+    }
+
+    .form-card p {
+        margin-bottom: 12px;
+    }
+
+    .form-card input,
+    .form-card textarea,
+    .form-card select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        margin-top: 6px;
+    }
+
+    .actions {
+        margin-top: 14px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .btn-primary {
+        background: #5f73e8;
+        color: #ffffff;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 14px;
+        cursor: pointer;
+    }
+
+    .btn-link {
+        color: #1e3a8a;
+        text-decoration: none;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <h2>Add Tag</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="actions">
+            <button type="submit" class="btn-primary">Save Tag</button>
+            <a href="{% url 'tag_list' %}" class="btn-link">Back to Tags</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

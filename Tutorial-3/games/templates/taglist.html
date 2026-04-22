@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Tag List{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-title {
+        margin-bottom: 16px;
+        color: #1e3a8a;
+    }
+
+    .tag-list {
+        list-style: none;
+        display: grid;
+        gap: 10px;
+        padding-left: 0;
+    }
+
+    .tag-item {
+        background: #fff;
+        border: 1px solid #dbe3ef;
+        border-radius: 8px;
+        padding: 12px;
+        font-weight: 600;
+        color: #0f172a;
+    }
+
+    .muted {
+        color: #6b7280;
+    }
+
+    .actions {
+        margin-bottom: 14px;
+    }
+
+    .btn-primary {
+        display: inline-block;
+        background: #5f73e8;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Available Tags</h2>
+
+<div class="actions">
+    <a href="{% url 'tag_add' %}" class="btn-primary">Add Tag</a>
+</div>
+
+<ul class="tag-list">
+    {% for tag in tags %}
+        <li class="tag-item">{{ tag.label }}</li>
+    {% empty %}
+        <li class="muted">No tags found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+

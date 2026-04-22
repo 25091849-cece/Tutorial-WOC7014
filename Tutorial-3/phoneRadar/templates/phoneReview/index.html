@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to PhoneReview!</title>
+    <link rel="stylesheet" href="{% static 'ccs/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to PhoneReview!</h1>
+
+        <div class="phone-illustration">
+            <div class="phone">
+                <div class="rating-badge">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <div class="btn-group">
+                <a href="{% url 'phone_list' %}" class="btn btn-primary">Browse Phones</a>
+                <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+            </div>
+        </div>
+
+        <p class="tagline">
+            Discover detailed reviews and ratings for your favorite phones. Make informed decisions with our comprehensive database.
+        </p>
+    </div>
+</body>
+</html>
